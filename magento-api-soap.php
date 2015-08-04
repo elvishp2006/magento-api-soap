@@ -2,10 +2,10 @@
 /*
 	Plugin Name: Magento API SOAP
 	Plugin URI: http://apiki.com.br/
-	Version: 1.0.0
+	Version: 1.0.1
 	Author: Apiki WordPress
 	Author URI: http://apiki.com.br/
-	License: GPL2
+	License: MIT
 	Description: Integration with Magento API SOAP
 */
 namespace Magento\API\SOAP;
@@ -14,8 +14,6 @@ namespace Magento\API\SOAP;
 if ( ! function_exists( 'add_action' ) ) :
 	exit(0);
 endif;
-
-use Apiki\API;
 
 class App
 {
