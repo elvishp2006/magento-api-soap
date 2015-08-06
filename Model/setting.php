@@ -50,10 +50,21 @@ class Setting
      */
     private $cache_time;
 
+	/**
+	 * Images of products
+	 * @var array
+	 */
+	private $thumbnails;
+
     /**
      * The option name
      */
-    const OPTION = 'magento_api_soap';
+    const KEY_OPTIONS    = 'magento_api_soap';
+
+	/**
+	 * The thumbnails option
+	 */
+	const KEY_THUMBNAILS = 'magento_api_soap_thumbnail';
 
     /**
      * The constructor of this class
@@ -62,7 +73,7 @@ class Setting
     public function __construct()
     {
         if ( ! self::$option ) :
-            self::$option = get_option( self::OPTION  );
+            self::$option = get_option( self::KEY_OPTIONS  );
         endif;
     }
 
@@ -75,6 +86,17 @@ class Setting
     public function __get( $prop_name )
 	{
 		return $this->_get_property( $prop_name );
+	}
+
+	/**
+	 * Magic mathod to set properties
+	 * @since 2.0.1
+	 * @param string    $prop_name  The property name
+	 * @param mixed     $prop_value The property value
+	 */
+	public function __set( $prop_name, $prop_value )
+	{
+		$this->$prop_name = $this->_set_property( $prop_name, $prop_value );
 	}
 
     /**
@@ -117,11 +139,39 @@ class Setting
 					$this->cache_time = isset( self::$option[ 'cache_time' ] ) ? self::$option[ 'cache_time' ] : 1440;
 				break;
 
+			case 'thumbnails' :
+				if ( ! isset( $this->thumbnails ) )
+					$this->thumbnails = get_option( self::KEY_THUMBNAILS, array() );
+				break;
+
 			default :
 				return false;
 				break;
 		endswitch;
 
 		return $this->$prop_name;
+	}
+
+	/**
+	 * Private method to set a property
+	 * @since 2.0.1
+	 * @param string    $prop_name  The property name
+	 * @param mixed     $prop_value The property value
+	 */
+	private function _set_property( $prop_name, $prop_value )
+	{
+		switch ( $prop_name ) :
+
+			case 'thumbnails' :
+				update_option( self::KEY_THUMBNAILS, $prop_value );
+				break;
+
+			default :
+				return false;
+				break;
+
+		endswitch;
+
+		return $prop_value;
 	}
 }

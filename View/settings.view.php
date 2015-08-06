@@ -51,7 +51,7 @@ class Settings_View
     {
         $setting_model = new Setting();
     	?>
-    	<input class="regular-text" type="text" name="<?php echo Setting::OPTION . '[store_url]'; ?>" value="<?php echo esc_url( $setting_model->store_url ); ?>">
+    	<input class="regular-text" type="text" name="<?php echo Setting::KEY_OPTIONS . '[store_url]'; ?>" value="<?php echo esc_url( $setting_model->store_url ); ?>">
         <p class="description">http://domain/</p>
     	<?php
     }
@@ -65,7 +65,7 @@ class Settings_View
     {
         $setting_model = new Setting();
     	?>
-    	<input class="regular-text" type="text" name="<?php echo Setting::OPTION . '[wsdl]'; ?>" value="<?php echo esc_url( $setting_model->wsdl ); ?>">
+    	<input class="regular-text" type="text" name="<?php echo Setting::KEY_OPTIONS . '[wsdl]'; ?>" value="<?php echo esc_url( $setting_model->wsdl ); ?>">
         <p class="description">http://domain/api/?wsdl</p>
     	<?php
     }
@@ -79,7 +79,7 @@ class Settings_View
     {
         $setting_model = new Setting();
         ?>
-        <input class="regular-text" type="text" name="<?php echo Setting::OPTION . '[user_name]'; ?>" value="<?php echo esc_html( $setting_model->user_name ); ?>">
+        <input class="regular-text" type="text" name="<?php echo Setting::KEY_OPTIONS . '[user_name]'; ?>" value="<?php echo esc_html( $setting_model->user_name ); ?>">
         <?php
     }
 
@@ -92,7 +92,7 @@ class Settings_View
     {
         $setting_model = new Setting();
         ?>
-        <input class="regular-text" type="password" name="<?php echo Setting::OPTION . '[api_key]'; ?>" value="<?php echo esc_html( $setting_model->api_key ); ?>">
+        <input class="regular-text" type="password" name="<?php echo Setting::KEY_OPTIONS . '[api_key]'; ?>" value="<?php echo esc_html( $setting_model->api_key ); ?>">
         <?php
     }
 
@@ -117,7 +117,7 @@ class Settings_View
     {
         $setting_model = new Setting();
     	?>
-        <input type="checkbox" name="<?php echo Setting::OPTION . '[use_cache]'; ?>" <?php checked( 1, intval( $setting_model->use_cache ), true ); ?> value="1">
+        <input type="checkbox" name="<?php echo Setting::KEY_OPTIONS . '[use_cache]'; ?>" <?php checked( 1, intval( $setting_model->use_cache ), true ); ?> value="1">
         <span class="description">Usar cache? esta opção aumenta a performance!</span>
     	<?php
     }
@@ -131,7 +131,7 @@ class Settings_View
     {
         $setting_model = new Setting();
     	?>
-        <input type="text" name="<?php echo Setting::OPTION . '[cache_time]'; ?>" value="<?php echo intval( $setting_model->cache_time ); ?>" size="3">
+        <input type="text" name="<?php echo Setting::KEY_OPTIONS . '[cache_time]'; ?>" value="<?php echo intval( $setting_model->cache_time ); ?>" size="3">
         <span class="description">Minutos</span>
     	<?php
     }

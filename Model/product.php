@@ -269,20 +269,41 @@ class Product
     }
 
 	/**
-     * Get the thumbnail url
-     * @since  1.0.0
-     * @return mixed    The thumbnail url
-     */
-    public function get_thumbnail_url()
-    {
-        $thumbnail = $this->_get_media();
+	 * Get thumbnail
+	 * @since  2.0.1
+	 * @param  string    $size Size to get
+	 * @return string          The image html
+	 */
+	public function get_thumbnail( $size = '' )
+	{
+		$thumbnail = $this->_get_media();
 
-        if ( ! $thumbnail ) :
-            return '';
-        endif;
+		if ( ! $thumbnail ) :
+			return '';
+		endif;
 
-        return $thumbnail[ 0 ][ 'url' ];
-    }
+		$url = $thumbnail[0]['url'];
+
+		$setting_model = new Setting();
+
+		$thumbnails    = $setting_model->thumbnails;
+		$attachment_id = isset( $thumbnails[$url] ) ? $thumbnails[$url] : 0;
+
+		if ( $attachment_id ) :
+			return wp_get_attachment_image( $attachment_id, $size );
+		else :
+			$attachment_id = $this->_insert_attachment( $url );
+		endif;
+
+		if ( $attachment_id ) :
+			$thumbnails[$url]          = $attachment_id;
+			$setting_model->thumbnails = $thumbnails;
+
+			return wp_get_attachment_image( $attachment_id, $size );
+		endif;
+
+		return '';
+	}
 
 	/**
 	 * Get permalink
@@ -403,4 +424,48 @@ class Product
 
         unset( $magento );
     }
+
+	/**
+	 * Insert a image based on a url
+	 * @since  2.0.1
+	 * @param  string    $url The url of image
+	 * @return integer        The attachment id
+	 */
+	private function _insert_attachment( $url )
+	{
+		if ( ! $url ) :
+			return 0;
+		endif;
+
+		$upload_dir = wp_upload_dir();
+		$image_data = file_get_contents( $url );
+		$filename   = basename( $url );
+
+		if( wp_mkdir_p( $upload_dir['path'] ) ) :
+		    $file = "{$upload_dir['path']}/{$filename}";
+		else :
+		    $file = "{$upload_dir['basedir']}/{$filename}";
+		endif;
+
+		file_put_contents( $file, $image_data );
+
+		$wp_filetype = wp_check_filetype( $filename, null );
+
+		$attachment = array(
+		    'post_mime_type' => $wp_filetype['type'],
+		    'post_title'     => sanitize_file_name( $filename ),
+		    'post_content'   => '',
+		    'post_status'    => 'inherit'
+		);
+
+		$attach_id   = wp_insert_attachment( $attachment, $file );
+
+		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+		$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+
+		wp_update_attachment_metadata( $attach_id, $attach_data );
+
+		return $attach_id;
+	}
 }
