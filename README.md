@@ -16,7 +16,15 @@ $product_model = new Product( 1 );
 $product_model = new Product();
 
 //Get 4 products with status 1 randomly.
-$products_model = $product_model->find( array( 'max' => 4, 'random' => true, 'magento_filter' => array( 'status' => 1 ) ) );
+$products_model = $product_model->find(
+    array(
+        'max'            => 4,
+        'random'         => true,
+        'magento_filter' => array(
+            'status' => 1,
+            ),
+        ),
+);
 
 //Iterate on products.
 foreach ( $products_model->list as $product_model ) :
