@@ -28,6 +28,15 @@ A Wordpress plugin to integrate with Magento.
 	endforeach;
 ```
 
+You can also extend the Product class and create your own collection of products with custom fields:
+
+```php
+class Book extends Product
+{
+	public $num_pages;
+}
+```
+
 ## Contributing
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
