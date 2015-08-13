@@ -37,6 +37,7 @@ class Settings_Controller
     public function init()
     {
         register_setting( 'pluginPage', 'magento_api_soap' );
+		register_setting( 'pluginPage', 'magento_api_soap_thumbnail', array( 'Magento\API\SOAP\Settings_Controller', 'keep_thumbnails' ) );
 
     	add_settings_section(
     		'section_api_soap',
@@ -100,5 +101,28 @@ class Settings_Controller
     		'section_cache'
 		);
 
+		add_settings_field(
+			'magento_api_soap_thumbnail',
+			'Apagar cache de imagens',
+			array( 'Magento\API\SOAP\Settings_View', 'thumbnails_field_callback' ),
+			'pluginPage',
+			'section_cache'
+		);
     }
+
+	/**
+	 * Keep option thumbnail
+	 * @since  2.1.1
+	 * @return mixed    The result
+	 */
+	public static function keep_thumbnails()
+	{
+		$setting_model = new Setting();
+
+		if ( ! isset( $_POST['magento_api_soap_thumbnail'] ) ) :
+			return $setting_model->thumbnails;
+		endif;
+
+		return $_POST['magento_api_soap_thumbnail'];
+	}
 }

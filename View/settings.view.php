@@ -135,4 +135,17 @@ class Settings_View
         <span class="description">Minutos</span>
     	<?php
     }
+
+	/**
+	 * Clear thumbnails callback
+	 * @since  2.2.1
+	 * @return void
+	 */
+	public static function thumbnails_field_callback()
+	{
+		$setting_model = new Setting();
+		?>
+		<input type="checkbox" name="<?php echo Setting::KEY_THUMBNAILS; ?>" value="">
+		<?php
+	}
 }
