@@ -419,7 +419,7 @@ class Product
         $product = $magento_model->get_api_result( $this::RESOURCE_INFO, $ID );
 
         foreach ( $this as $key => $value ) :
-            $this->$key = isset( $product[ $key ] ) ? $product[ $key ] : '';
+            $this->$key = isset( $product[ $key ] ) ? $product[ $key ] : $this->$key;
         endforeach;
 
         unset( $magento );
