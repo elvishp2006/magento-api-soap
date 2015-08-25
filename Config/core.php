@@ -6,7 +6,7 @@ if ( ! function_exists( 'add_action' ) ) :
 	exit(0);
 endif;
 
-App::uses( 'product', 'Model' );
+App::uses( 'magento', 'Model' );
 App::uses( 'setting', 'Model' );
 App::uses( 'settings', 'Controller' );
 

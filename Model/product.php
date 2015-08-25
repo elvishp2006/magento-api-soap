@@ -6,8 +6,6 @@ if ( ! function_exists( 'add_action' ) ) :
 	exit(0);
 endif;
 
-App::uses( 'magento', 'Model' );
-
 class Product
 {
     /**
@@ -409,7 +407,7 @@ class Product
     /**
 	 * Populate the fields of this class
 	 * @since  1.0.0
-	 * @param mixed    $comment The ID of comment or associative array of fields
+	 * @param mixed    $ID The product id
 	 * @return void
 	 */
     private function _populate_fields( $ID )

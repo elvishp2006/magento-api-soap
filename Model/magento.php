@@ -68,7 +68,7 @@ class Magento
 	 * @param  array     $filter   The filter
 	 * @return mixed               The result
 	 */
-    public function get_api_result( $resource, $filter = array() )
+    public function get_api_result( $resource, $filter = false )
     {
 		if ( ! $this->use_cache || $this->cache_time <= 0 ) :
 			return $this->_get_api_result( $resource, $filter );
@@ -92,7 +92,7 @@ class Magento
 	 * @param  array     $filter   The filter
 	 * @return mixed               The result
 	 */
-	private function _get_api_result( $resource, $filter = array() )
+	private function _get_api_result( $resource, $filter )
 	{
 		$result = false;
 
@@ -101,7 +101,11 @@ class Magento
 			$this->session     = Soap_Client::get_session( $this->user_name, $this->api_key );
 
 			if ( $this->soap_client ) :
-				$result = $this->soap_client->call( $this->session, $resource, array( $filter ) );
+				if ( $filter ) :
+					$result = $this->soap_client->call( $this->session, $resource, array( $filter ) );
+				else :
+					$result = $this->soap_client->call( $this->session, $resource );
+				endif;
 			endif;
 		} catch ( \SoapFault $e ) {
 			error_log( sprintf( '%s - %s', $e->getMessage(), $e->getTraceAsString() ) );

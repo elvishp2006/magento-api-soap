@@ -2,7 +2,7 @@
 /*
 	Plugin Name: Magento API SOAP
 	Plugin URI: http://apiki.com.br/
-	Version: 2.1.2
+	Version: 2.2.2
 	Author: Apiki WordPress
 	Author URI: http://apiki.com.br/
 	License: MIT
