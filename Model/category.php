@@ -235,7 +235,7 @@ class Category
 
 	/**
 	 * Find instances of this class
-	 * @since  1.0.0
+	 * @since  2.2.2
 	 * @param  array     $args Params to find
 	 * @return mixed           Result of the find
 	 */
@@ -250,6 +250,24 @@ class Category
 		$magento_model = new Magento();
 
 		return $this->_parse( $magento_model->get_api_result( $this::RESOURCE_LIST, $args[ 'parentId' ] ) );
+	}
+
+	/**
+	 * Get permalink
+	 * @since  2.3.2
+	 * @return string    The permalink
+	 */
+	public function get_permalink()
+	{
+		$setting_model = new Setting();
+
+		$store_url = $setting_model->store_url;
+
+		if ( $store_url[ strlen( $store_url ) - 1 ] != '/' ) :
+			$store_url .= '/';
+		endif;
+
+		return "{$store_url}{$this->url_path}";
 	}
 
 	/**
