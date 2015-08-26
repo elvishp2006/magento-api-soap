@@ -36,7 +36,7 @@ class Product
      * Array of categories
      * @var array
      */
-    private $categories;
+    private $categories = array();
 
     /**
      * Array of websites
