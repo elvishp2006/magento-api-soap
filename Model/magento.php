@@ -108,9 +108,9 @@ class Magento
 				endif;
 			endif;
 		} catch ( \SoapFault $e ) {
-			error_log( sprintf( '%s - %s', $e->getMessage(), $e->getTraceAsString() ) );
+			error_log( sprintf( '%s - %s - %s', $resource, $e->getMessage(), $e->getTraceAsString() ) );
 		} catch ( \Exception $e ) {
-			error_log( sprintf( '%s - %s', $e->getMessage(), $e->getTraceAsString() ) );
+			error_log( sprintf( '%s - %s - %s', $resource, $e->getMessage(), $e->getTraceAsString() ) );
 		}
 
 		return $result;
